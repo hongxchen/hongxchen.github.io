@@ -63,7 +63,90 @@
         <p>VLC</p>
 <p>  以下所有过程均参考VLC Building文档，<a href="https://wiki.videolan.org/UnixCompile/" target="_blank">https://wiki.videolan.org/UnixCompile/</a></p>
 <p>  (1) 安装linux，本人使用Xubuntu 14.04和Fedora20</p>
+<p>  (2) 安装所需要的编译器和工具链</p>
+<pre><code><span class="keyword">On</span> Fedora
+<span class="subst">%</span> sudo yum install git libtool pkgconfig
 
+<span class="keyword">On</span> Debian <span class="literal">or</span> Ubuntu
+<span class="subst">%</span> sudo apt<span class="attribute">-get</span> install git libtool build<span class="attribute">-essential</span> pkg<span class="attribute">-config</span> autoconf
+
+<span class="keyword">On</span> Arch
+<span class="subst">%</span> sudo pacman <span class="attribute">-S</span> base<span class="attribute">-devel</span> git pkg<span class="attribute">-config</span> autoconf automake
+</code></pre><p>  (3) 获取VLC源码</p>
+<pre><code>git clone git://git<span class="preprocessor">.videolan</span><span class="preprocessor">.org</span>/vlc<span class="preprocessor">.git</span>
+</code></pre><p>   ** 你也可以之间下载源代码包进行编译</p>
+<pre><code>wget ftp://ftp<span class="preprocessor">.videolan</span><span class="preprocessor">.org</span>/pub/videolan/vlc/<span class="number">2.1</span><span class="number">.5</span>/vlc-<span class="number">2.1</span><span class="number">.5</span><span class="preprocessor">.tar</span><span class="preprocessor">.xz</span>
+</code></pre><p>  (4) bootstrapping the source tree</p>
+<pre><code><span class="built_in">cd</span> vlc
+./bootstrap
+</code></pre><p>  (5) 获取编译所需的第三方库</p>
+<pre><code><span class="keyword">On</span> Debian <span class="literal">or</span> Ubuntu
+<span class="subst">%</span> sudo apt<span class="attribute">-get</span> build<span class="attribute">-dep</span> vlc
+
+<span class="keyword">On</span> OpenSuSE
+<span class="subst">%</span> sudo zypper si <span class="attribute">-d</span> vlc
+<span class="subst">**</span> OpenSuSE必须先添加VLC repositories
+sudo zypper ar http:<span class="comment">//download.videolan.org/pub/vlc/SuSE/&lt;openSUSEversion&gt; VLC</span>
+替换 <span class="subst">&lt;</span>openSUSEversion<span class="subst">&gt;</span> 为你当前系统的版本，如 (<span class="number">12.1</span>, <span class="number">11.4</span>, <span class="number">11.3</span>, <span class="number">11.2</span> <span class="literal">or</span> <span class="number">11.1</span>)
+</code></pre><p>  (6) 编译第三方库</p>
+<pre><code>安装所需的编译工具链
+% apt-<span class="keyword">get</span> install subversion yasm cvs cmake
+
+cd contrib
+mkdir <span class="keyword">native</span>
+cd <span class="keyword">native</span>
+../bootstrap
+make
+</code></pre><p>  (7) Configure VLC</p>
+<pre><code>在VLC目录执行
+<span class="built_in">.</span>/configure
+
+如果你想要调试版，需要加入一下参数(请参考https:<span class="comment">//wiki.videolan.org/Debug/)</span>
+<span class="built_in">.</span>/configure <span class="subst">--</span>enable<span class="attribute">-debug</span> <span class="subst">--</span>disable<span class="attribute">-optimizations</span>
+同时需要去除<span class="subst">--</span>enable<span class="attribute">-release</span>
+
+自定义编译选项请参考https:<span class="comment">//wiki.videolan.org/Configure/</span>
+
+<span class="built_in">.</span>/configure <span class="subst">--</span>enable<span class="attribute">-x11</span> <span class="subst">--</span>enable<span class="attribute">-xvideo</span> <span class="subst">--</span>enable<span class="attribute">-sdl</span> <span class="subst">--</span>enable<span class="attribute">-avcodec</span> <span class="subst">--</span>enable<span class="attribute">-avformat</span> <span class="subst">\</span>
+<span class="subst">--</span>enable<span class="attribute">-swscale</span> <span class="subst">--</span>enable<span class="attribute">-mad</span> <span class="subst">--</span>enable<span class="attribute">-libdvbpsi</span> <span class="subst">--</span>enable<span class="attribute">-a52</span> <span class="subst">--</span>enable<span class="attribute">-libmpeg2</span> <span class="subst">--</span>enable<span class="attribute">-dvdnav</span> <span class="subst">\</span>
+<span class="subst">--</span>enable<span class="attribute">-faad</span> <span class="subst">--</span>enable<span class="attribute">-vorbis</span> <span class="subst">--</span>enable<span class="attribute">-ogg</span> <span class="subst">--</span>enable<span class="attribute">-theora</span> <span class="subst">--</span>enable<span class="attribute">-faac</span> <span class="subst">--</span>enable<span class="attribute">-mkv</span> <span class="subst">--</span>enable<span class="attribute">-freetype</span> <span class="subst">\</span>
+<span class="subst">--</span>enable<span class="attribute">-fribidi</span> <span class="subst">--</span>enable<span class="attribute">-speex</span> <span class="subst">--</span>enable<span class="attribute">-flac</span> <span class="subst">--</span>enable<span class="attribute">-live555</span> <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-live555</span><span class="attribute">-tree</span><span class="subst">=</span>/usr/lib/live <span class="subst">\</span>
+<span class="subst">--</span>enable<span class="attribute">-caca</span> <span class="subst">--</span>enable<span class="attribute">-skins</span> <span class="subst">--</span>enable<span class="attribute">-skins2</span> <span class="subst">--</span>enable<span class="attribute">-alsa</span> <span class="subst">--</span>enable<span class="attribute">-qt4</span> <span class="subst">--</span>enable<span class="attribute">-ncurses</span>
+
+Linux：
+<span class="built_in">.</span>/configure <span class="subst">--</span>enable<span class="attribute">-x11</span> <span class="subst">--</span>enable<span class="attribute">-xvideo</span> <span class="subst">--</span>disable<span class="attribute">-gtk</span> <span class="subst">\</span>
+<span class="subst">--</span>enable<span class="attribute">-sdl</span> <span class="subst">--</span>enable<span class="attribute">-ffmpeg</span> <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-ffmpeg</span><span class="attribute">-mp3lame</span> <span class="subst">\</span>
+<span class="subst">--</span>enable<span class="attribute">-mad</span> <span class="subst">--</span>enable<span class="attribute">-libdvbpsi</span> <span class="subst">--</span>enable<span class="attribute">-a52</span> <span class="subst">--</span>enable<span class="attribute">-dts</span> <span class="subst">\</span>
+<span class="subst">--</span>enable<span class="attribute">-libmpeg2</span> <span class="subst">--</span>enable<span class="attribute">-dvdnav</span> <span class="subst">--</span>enable<span class="attribute">-faad</span> <span class="subst">\</span>
+<span class="subst">--</span>enable<span class="attribute">-vorbis</span> <span class="subst">--</span>enable<span class="attribute">-ogg</span> <span class="subst">--</span>enable<span class="attribute">-theora</span> <span class="subst">--</span>enable<span class="attribute">-faac</span><span class="subst">\</span>
+<span class="subst">--</span>enable<span class="attribute">-mkv</span> <span class="subst">--</span>enable<span class="attribute">-freetype</span> <span class="subst">--</span>enable<span class="attribute">-fribidi</span> <span class="subst">\</span>
+<span class="subst">--</span>enable<span class="attribute">-speex</span> <span class="subst">--</span>enable<span class="attribute">-flac</span> <span class="subst">--</span>enable<span class="attribute">-livedotcom</span> <span class="subst">\</span>
+<span class="subst">--</span><span class="keyword">with</span><span class="attribute">-livedotcom</span><span class="attribute">-tree</span><span class="subst">=</span>/usr/lib/live <span class="subst">--</span>enable<span class="attribute">-caca</span> <span class="subst">\</span>
+<span class="subst">--</span>enable<span class="attribute">-skins</span> <span class="subst">--</span>enable<span class="attribute">-skins2</span> <span class="subst">--</span>enable<span class="attribute">-alsa</span> <span class="subst">--</span>disable<span class="attribute">-kde</span><span class="subst">\</span>
+<span class="subst">--</span>disable<span class="attribute">-qt</span> <span class="subst">--</span>enable<span class="attribute">-wxwindows</span> <span class="subst">--</span>enable<span class="attribute">-ncurses</span> <span class="subst">\</span>
+<span class="subst">--</span>enable<span class="attribute">-release</span>
+
+Linux GIT
+<span class="built_in">.</span>/configure <span class="subst">--</span>enable<span class="attribute">-x11</span> <span class="subst">--</span>enable<span class="attribute">-xvideo</span> <span class="subst">--</span>disable<span class="attribute">-gtk</span> <span class="subst">\</span>
+<span class="subst">--</span>enable<span class="attribute">-sdl</span> <span class="subst">--</span>enable<span class="attribute">-ffmpeg</span> <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-ffmpeg</span><span class="attribute">-mp3lame</span> <span class="subst">\</span>
+<span class="subst">--</span>enable<span class="attribute">-mad</span> <span class="subst">--</span>enable<span class="attribute">-libdvbpsi</span> <span class="subst">--</span>enable<span class="attribute">-a52</span> <span class="subst">--</span>enable<span class="attribute">-dca</span> <span class="subst">\</span>
+<span class="subst">--</span>enable<span class="attribute">-libmpeg2</span> <span class="subst">--</span>enable<span class="attribute">-dvdnav</span> <span class="subst">--</span>enable<span class="attribute">-faad</span> <span class="subst">\</span>
+<span class="subst">--</span>enable<span class="attribute">-vorbis</span> <span class="subst">--</span>enable<span class="attribute">-ogg</span> <span class="subst">--</span>enable<span class="attribute">-theora</span> <span class="subst">--</span>enable<span class="attribute">-faac</span><span class="subst">\</span>
+<span class="subst">--</span>enable<span class="attribute">-mkv</span> <span class="subst">--</span>enable<span class="attribute">-freetype</span> <span class="subst">--</span>enable<span class="attribute">-fribidi</span> <span class="subst">\</span>
+<span class="subst">--</span>enable<span class="attribute">-speex</span> <span class="subst">--</span>enable<span class="attribute">-flac</span> <span class="subst">--</span>enable<span class="attribute">-livedotcom</span> <span class="subst">\</span>
+<span class="subst">--</span><span class="keyword">with</span><span class="attribute">-livedotcom</span><span class="attribute">-tree</span><span class="subst">=</span>/usr/lib/live <span class="subst">--</span>enable<span class="attribute">-caca</span> <span class="subst">\</span>
+<span class="subst">--</span>enable<span class="attribute">-skins</span> <span class="subst">--</span>enable<span class="attribute">-skins2</span> <span class="subst">--</span>enable<span class="attribute">-alsa</span> <span class="subst">--</span>disable<span class="attribute">-kde</span><span class="subst">\</span>
+<span class="subst">--</span>disable<span class="attribute">-qt</span> <span class="subst">--</span>enable<span class="attribute">-wxwindows</span> <span class="subst">--</span>enable<span class="attribute">-ncurses</span> <span class="subst">\</span>
+<span class="subst">--</span>enable<span class="attribute">-asa</span> <span class="subst">--</span>enable<span class="attribute">-release</span>
+</code></pre><p>  (8) 编译VLC</p>
+<pre><code><span class="built_in">make</span>
+</code></pre><p>  (9) 安装VLC</p>
+<pre><code>make <span class="keyword">install</span>
+</code></pre><p>  (10) 卸载</p>
+<pre><code><span class="built_in">make</span> uninstall
+</code></pre><p>  (11) 清理工程</p>
+<pre><code><span class="built_in">make</span> clean
+</code></pre>
       
     </div>
     <footer>
