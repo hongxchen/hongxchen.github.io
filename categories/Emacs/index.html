@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Emacs | hongxchen&#39;s blog</title>
+  <meta name="author" content="hongxchen">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="hongxchen&#39;s blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="hongxchen&#39;s blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">hongxchen&#39;s blog</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title category">Emacs</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-07-19T10:19:19.000Z"><a href="/2014/07/19/my-emacs-config/">7月 19 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/19/my-emacs-config/">我的Emacs配置</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>我的emacs配置，已经不再使用</p>
+<pre><code><span class="label">https:</span>//github<span class="preprocessor">.com</span>/hongxchen/emacs<span class="preprocessor">.d</span>
+</code></pre><p>  现在使用prelude的配置</p>
+<pre><code><span class="label">https:</span>//github<span class="preprocessor">.com</span>/bbatsov/prelude<span class="preprocessor">.git</span>
+</code></pre><p>  具体配置方法：</p>
+<p>  (1) 安装Emacs24</p>
+<pre><code>mac:
+brew <span class="keyword">install</span> emacs
+
+linux:
+sudo apt-get <span class="keyword">install</span> emacs
+sudo yum <span class="keyword">install</span> emacs
+</code></pre><p>  (2) 安装第三方插件</p>
+<pre><code>mac:
+brew install ctags <span class="built_in">global</span>
+
+linux:
+sudo apt-<span class="built_in">get</span> install ctags <span class="built_in">global</span> clang
+sudo yum install ctags <span class="built_in">global</span> clang
+</code></pre><p>  (3) 安装prelude的配置</p>
+<pre><code>curl <span class="attribute">-L</span> http:<span class="comment">//git.io/epre | sh</span>
+</code></pre><p>  (4) 自定义配置文件</p>
+<pre><code>cd ~<span class="subst">/</span><span class="built_in">.</span>emacs<span class="built_in">.</span>d<span class="subst">/</span>
+vim prelude<span class="attribute">-modules</span><span class="built_in">.</span>el
+
+选择需要打开的mode，去除开头的;;,我的设置如下：
+;;; Uncomment the modules you<span class="string">'d like to use and restart Prelude afterwards
+
+;; Emacs IRC client
+(require '</span>prelude<span class="attribute">-erc</span>)
+(<span class="keyword">require</span> <span class="string">'prelude-ido) ;; Super charges Emacs completion for C-x C-f and more
+;; (require '</span>prelude<span class="attribute">-helm</span>) ;; Interface for narrowing <span class="literal">and</span> search
+(<span class="keyword">require</span> <span class="string">'prelude-company)
+;; (require '</span>prelude<span class="attribute">-key</span><span class="attribute">-chord</span>) ;; Binds useful features <span class="keyword">to</span> key combinations
+;; (<span class="keyword">require</span> <span class="string">'prelude-mediawiki)
+;; (require '</span>prelude<span class="attribute">-evil</span>)
+
+;;; Programming languages support
+(<span class="keyword">require</span> <span class="string">'prelude-c)
+;; (require '</span>prelude<span class="attribute">-clojure</span>)
+;; (<span class="keyword">require</span> <span class="string">'prelude-coffee)
+;; (require '</span>prelude<span class="attribute">-common</span><span class="attribute">-lisp</span>)
+;; (<span class="keyword">require</span> <span class="string">'prelude-css)
+(require '</span>prelude<span class="attribute">-emacs</span><span class="attribute">-lisp</span>)
+(<span class="keyword">require</span> <span class="string">'prelude-erlang)
+(require '</span>prelude<span class="attribute">-go</span>)
+;; (<span class="keyword">require</span> <span class="string">'prelude-haskell)
+;; (require '</span>prelude<span class="attribute">-js</span>)
+;; (<span class="keyword">require</span> <span class="string">'prelude-latex)
+(require '</span>prelude<span class="attribute">-lisp</span>)
+(<span class="keyword">require</span> <span class="string">'prelude-org) ;; Org-mode helps you keep TODO lists, notes and more
+;; (require '</span>prelude<span class="attribute">-perl</span>)
+;; (<span class="keyword">require</span> <span class="string">'prelude-python)
+;; (require '</span>prelude<span class="attribute">-ruby</span>)
+;; (<span class="keyword">require</span> <span class="string">'prelude-scala)
+(require '</span>prelude<span class="attribute">-scheme</span>)
+(<span class="keyword">require</span> <span class="string">'prelude-shell)
+;; (require '</span>prelude<span class="attribute">-scss</span>)
+;; (<span class="keyword">require</span> <span class="string">'prelude-web) ;; Emacs mode for web templates
+(require '</span>prelude<span class="attribute">-xml</span>)
+</code></pre><p>  (5) 安装mode</p>
+<pre><code>打开emacs，会自动下载<span class="keyword">mode</span>所需的文件
+</code></pre><p>  (6) 重启emacs</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:hongxchen.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Emacs/">Emacs</a><small>1</small></li>
+  
+    <li><a href="/categories/MPlayer/">MPlayer</a><small>1</small></li>
+  
+    <li><a href="/categories/VLC/">VLC</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/文章/">文章</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 hongxchen
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
