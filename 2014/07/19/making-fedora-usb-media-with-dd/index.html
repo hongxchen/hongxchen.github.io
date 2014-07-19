@@ -3,15 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>MPlayer开源 | hongxchen&#39;s blog</title>
+  <title>dd 制作地沟油(Fedora)安装U盘 | hongxchen&#39;s blog</title>
   <meta name="author" content="hongxchen">
   
-  <meta name="description" content="MPlayer相关源码开源，代码托管在Github，地址：https://github.com/hongxchen?tab=repositories">
+  <meta name="description" content="很多人在windows下直接用一些工具直接将iso写入U盘或者硬盘，这个是U盘安装windows的方法，在fedora上是不行的，因为fedora的iso其实是分轨镜像，在一个iso镜像里有若干个分区，正确的方法是在Linux或者mac下使用dd来做，windows请下载MinGW。
+命令如下：
+d">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="MPlayer开源"/>
+  <meta property="og:title" content="dd 制作地沟油(Fedora)安装U盘"/>
   <meta property="og:site_name" content="hongxchen&#39;s blog"/>
 
   
@@ -51,18 +53,30 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-07-19T08:02:00.000Z"><a href="/2014/07/19/mplayer/">7月 19 2014</a></time>
+        <time datetime="2014-07-19T11:29:19.000Z"><a href="/2014/07/19/making-fedora-usb-media-with-dd/">7月 19 2014</a></time>
       
       
   
-    <h1 class="title">MPlayer开源</h1>
+    <h1 class="title">dd 制作地沟油(Fedora)安装U盘</h1>
   
 
     </header>
     <div class="entry">
       
-        <p>MPlayer相关源码开源，代码托管在Github，地址：<br><a href="https://github.com/hongxchen?tab=repositories" target="_blank">https://github.com/hongxchen?tab=repositories</a></p>
+        <p>很多人在windows下直接用一些工具直接将iso写入U盘或者硬盘，这个是U盘安装windows的方法，在fedora上是不行的，因为fedora的iso其实是分轨镜像，在一个iso镜像里有若干个分区，正确的方法是在Linux或者mac下使用dd来做，windows请下载MinGW。</p>
+<pre><code>命令如下：
+dd <span class="keyword">if</span>=path/fedora.iso of=<span class="regexp">/dev/sd</span>X
+注意问题
+<span class="number">1</span>. <span class="keyword">if</span>指向的是iso镜像 of指向的是写入目标，不要弄反了，反了就把磁盘做成iso了
+<span class="number">2</span>. of的指向目标是整个磁盘，比如是/dev/sde,而不是类似/dev/sde1这样的某个磁盘分区(请在/dev中查看U盘)
+<span class="number">3</span>. 等待写入完成
 
+查看dd进度，比如每<span class="number">10</span>秒输出进度(以下命令执行其中一个就行了)
+<span class="number">1</span>. watch -n <span class="number">10</span> pkill -USR1 ^dd$
+<span class="number">2</span>. watch -n <span class="number">10</span> killall -USR1 dd
+<span class="number">3</span>. <span class="keyword">while</span> killall -USR1 dd; <span class="keyword">do</span> <span class="keyword">sleep</span> <span class="number">10</span>; done
+<span class="number">4</span>. <span class="keyword">while</span> (ps auxww |<span class="keyword">grep</span> <span class="string">" dd "</span> |<span class="keyword">grep</span> -v <span class="keyword">grep</span> |awk <span class="string">'{print $2}'</span> |<span class="keyword">while</span> <span class="keyword">read</span> pid; <span class="keyword">do</span> <span class="keyword">kill</span> -USR1 <span class="variable">$pid</span>; done) ; <span class="keyword">do</span> <span class="keyword">sleep</span> <span class="number">10</span>; done
+</code></pre>
       
     </div>
     <footer>
@@ -70,7 +84,7 @@
         
   
   <div class="categories">
-    <a href="/categories/MPlayer/">MPlayer</a>
+    <a href="/categories/Fedora/">Fedora</a>
   </div>
 
         
@@ -119,7 +133,7 @@
   }(document, 'script', 'facebook-jssdk'));
 </script>
 
-<div class="fb-comments" data-href="http://hongxchen.github.io/2014/07/19/mplayer/" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+<div class="fb-comments" data-href="http://hongxchen.github.io/2014/07/19/making-fedora-usb-media-with-dd/" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
       
   
 </section>

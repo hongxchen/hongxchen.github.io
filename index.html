@@ -50,6 +50,86 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-07-19T11:29:19.000Z"><a href="/2014/07/19/making-fedora-usb-media-with-dd/">7月 19 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/19/making-fedora-usb-media-with-dd/">dd 制作地沟油(Fedora)安装U盘</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>很多人在windows下直接用一些工具直接将iso写入U盘或者硬盘，这个是U盘安装windows的方法，在fedora上是不行的，因为fedora的iso其实是分轨镜像，在一个iso镜像里有若干个分区，正确的方法是在Linux或者mac下使用dd来做，windows请下载MinGW。</p>
+<pre><code>命令如下：
+dd <span class="keyword">if</span>=path/fedora.iso of=<span class="regexp">/dev/sd</span>X
+注意问题
+<span class="number">1</span>. <span class="keyword">if</span>指向的是iso镜像 of指向的是写入目标，不要弄反了，反了就把磁盘做成iso了
+<span class="number">2</span>. of的指向目标是整个磁盘，比如是/dev/sde,而不是类似/dev/sde1这样的某个磁盘分区(请在/dev中查看U盘)
+<span class="number">3</span>. 等待写入完成
+
+查看dd进度，比如每<span class="number">10</span>秒输出进度(以下命令执行其中一个就行了)
+<span class="number">1</span>. watch -n <span class="number">10</span> pkill -USR1 ^dd$
+<span class="number">2</span>. watch -n <span class="number">10</span> killall -USR1 dd
+<span class="number">3</span>. <span class="keyword">while</span> killall -USR1 dd; <span class="keyword">do</span> <span class="keyword">sleep</span> <span class="number">10</span>; done
+<span class="number">4</span>. <span class="keyword">while</span> (ps auxww |<span class="keyword">grep</span> <span class="string">" dd "</span> |<span class="keyword">grep</span> -v <span class="keyword">grep</span> |awk <span class="string">'{print $2}'</span> |<span class="keyword">while</span> <span class="keyword">read</span> pid; <span class="keyword">do</span> <span class="keyword">kill</span> -USR1 <span class="variable">$pid</span>; done) ; <span class="keyword">do</span> <span class="keyword">sleep</span> <span class="number">10</span>; done
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-07-19T11:24:06.000Z"><a href="/2014/07/19/emacs-compile-on-linux/">7月 19 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/19/emacs-compile-on-linux/">Emacs compile on Linux</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>% yum groupinstall “Development Tools”</p>
+<p>  % yum install gtk+-devel gtk2-devel libXpm-devel libpng-devel giflib-devel libpng-devel libtiff-devel libjpeg-devel ncurses-devel gpm-devel dbus-devel dbus-glib-devel dbus-python GConf2-devel pkgconfig libXft-devel</p>
+<p>  % ./configure —prefix=/usr/local —with-x-toolkit=gtk</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-07-19T10:41:34.000Z"><a href="/2014/07/19/shadowsocks-config/">7月 19 2014</a></time>
       
       
@@ -403,7 +483,9 @@ Linux GIT
   <h3 class="title">分类</h3>
   <ul class="entry">
   
-    <li><a href="/categories/Emacs/">Emacs</a><small>1</small></li>
+    <li><a href="/categories/Emacs/">Emacs</a><small>2</small></li>
+  
+    <li><a href="/categories/Fedora/">Fedora</a><small>1</small></li>
   
     <li><a href="/categories/MPlayer/">MPlayer</a><small>1</small></li>
   
@@ -420,7 +502,7 @@ Linux GIT
   <h3 class="title">标签</h3>
   <ul class="entry">
   
-    <li><a href="/tags/文章/">文章</a><small>4</small></li>
+    <li><a href="/tags/文章/">文章</a><small>6</small></li>
   
   </ul>
 </div>
