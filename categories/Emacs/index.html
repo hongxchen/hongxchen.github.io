@@ -103,70 +103,15 @@
 <pre><code><span class="label">https:</span>//github<span class="preprocessor">.com</span>/hongxchen/emacs<span class="preprocessor">.d</span>
 </code></pre><p>  现在使用prelude的配置</p>
 <pre><code><span class="label">https:</span>//github<span class="preprocessor">.com</span>/bbatsov/prelude<span class="preprocessor">.git</span>
-</code></pre><p>  具体配置方法：</p>
-<p>  (1) 安装Emacs24</p>
-<pre><code>mac:
-brew <span class="keyword">install</span> emacs
-
-linux:
-sudo apt-get <span class="keyword">install</span> emacs
-sudo yum <span class="keyword">install</span> emacs
-</code></pre><p>  (2) 安装第三方插件</p>
-<pre><code>mac:
-brew install ctags <span class="built_in">global</span>
-
-linux:
-sudo apt-<span class="built_in">get</span> install ctags <span class="built_in">global</span> clang
-sudo yum install ctags <span class="built_in">global</span> clang
-</code></pre><p>  (3) 安装prelude的配置</p>
-<pre><code>curl <span class="attribute">-L</span> http:<span class="comment">//git.io/epre | sh</span>
-</code></pre><p>  (4) 自定义配置文件</p>
-<pre><code>cd ~<span class="subst">/</span><span class="built_in">.</span>emacs<span class="built_in">.</span>d<span class="subst">/</span>
-vim prelude<span class="attribute">-modules</span><span class="built_in">.</span>el
-
-选择需要打开的mode，去除开头的;;,我的设置如下：
-;;; Uncomment the modules you<span class="string">'d like to use and restart Prelude afterwards
-
-;; Emacs IRC client
-(require '</span>prelude<span class="attribute">-erc</span>)
-(<span class="keyword">require</span> <span class="string">'prelude-ido) ;; Super charges Emacs completion for C-x C-f and more
-;; (require '</span>prelude<span class="attribute">-helm</span>) ;; Interface for narrowing <span class="literal">and</span> search
-(<span class="keyword">require</span> <span class="string">'prelude-company)
-;; (require '</span>prelude<span class="attribute">-key</span><span class="attribute">-chord</span>) ;; Binds useful features <span class="keyword">to</span> key combinations
-;; (<span class="keyword">require</span> <span class="string">'prelude-mediawiki)
-;; (require '</span>prelude<span class="attribute">-evil</span>)
-
-;;; Programming languages support
-(<span class="keyword">require</span> <span class="string">'prelude-c)
-;; (require '</span>prelude<span class="attribute">-clojure</span>)
-;; (<span class="keyword">require</span> <span class="string">'prelude-coffee)
-;; (require '</span>prelude<span class="attribute">-common</span><span class="attribute">-lisp</span>)
-;; (<span class="keyword">require</span> <span class="string">'prelude-css)
-(require '</span>prelude<span class="attribute">-emacs</span><span class="attribute">-lisp</span>)
-(<span class="keyword">require</span> <span class="string">'prelude-erlang)
-(require '</span>prelude<span class="attribute">-go</span>)
-;; (<span class="keyword">require</span> <span class="string">'prelude-haskell)
-;; (require '</span>prelude<span class="attribute">-js</span>)
-;; (<span class="keyword">require</span> <span class="string">'prelude-latex)
-(require '</span>prelude<span class="attribute">-lisp</span>)
-(<span class="keyword">require</span> <span class="string">'prelude-org) ;; Org-mode helps you keep TODO lists, notes and more
-;; (require '</span>prelude<span class="attribute">-perl</span>)
-;; (<span class="keyword">require</span> <span class="string">'prelude-python)
-;; (require '</span>prelude<span class="attribute">-ruby</span>)
-;; (<span class="keyword">require</span> <span class="string">'prelude-scala)
-(require '</span>prelude<span class="attribute">-scheme</span>)
-(<span class="keyword">require</span> <span class="string">'prelude-shell)
-;; (require '</span>prelude<span class="attribute">-scss</span>)
-;; (<span class="keyword">require</span> <span class="string">'prelude-web) ;; Emacs mode for web templates
-(require '</span>prelude<span class="attribute">-xml</span>)
-</code></pre><p>  (5) 安装mode</p>
-<pre><code>打开emacs，会自动下载<span class="keyword">mode</span>所需的文件
-</code></pre><p>  (6) 重启emacs</p>
-
+</code></pre><p>  具体配置方法如下：<br>
       
     </div>
     <footer>
       
+        
+          <div class="alignleft">
+            <a href="/2014/07/19/my-emacs-config/#more" class="more-link">Read More</a>
+          </div>
         
         
       

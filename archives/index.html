@@ -78,51 +78,15 @@
     <span class="built_in">printf</span> (<span class="string">"hello word!\nsec = %e\n"</span>, sec);
     <span class="built_in">exit</span>(<span class="number">0</span>);
 }
-</code></pre><p>  (2) autoscan 生成文件configure.scan</p>
-<pre><code><span class="tag">%</span> autoscan
-</code></pre><p>  (3) 修改configure.scan</p>
-<pre><code>修改后的文件内容如下：
-<span class="comment">-- Autoconf --</span>
-Process this <span class="built_in">file</span> <span class="operator">with</span> autoconf <span class="built_in">to</span> produce <span class="operator">a</span> configure script.
-AC_PREREQ(<span class="number">2.61</span>)
-AC_INIT(hello, <span class="number">1.0</span>) <span class="comment">#修改</span>
-AM_INIT_AUTOMAKE(hello, <span class="number">1.0</span>) <span class="comment">#添加</span>
-AC_CONFIG_SRCDIR([hello.c])
-AC_CONFIG_HEADER([config.h])
-Checks <span class="keyword">for</span> programs.
-AC_PROG_CC
-Checks <span class="keyword">for</span> libraries.
-Checks <span class="keyword">for</span> header <span class="built_in">files</span>.
-AC_CHECK_HEADERS([sys/<span class="built_in">time</span>.h])
-Checks <span class="keyword">for</span> typedefs, structures, <span class="operator">and</span> compiler characteristics.
-AC_HEADER_TIME
-Checks <span class="keyword">for</span> library functions.
-AC_CHECK_FUNCS([gettimeofday])
-AC_CONFIG_FILES([Makefile]) <span class="comment">#添加</span>
-AC_OUTPUT
-</code></pre><p>  (3) 3、文件改名configure.scan为configure.in</p>
-<pre><code>% mv configure<span class="preprocessor">.scan</span> configure<span class="preprocessor">.in</span>
-</code></pre><p>  (4) 4、运行aclocal 生成 aclocal.m4</p>
-<pre><code><span class="tag">%</span> aclocal
-</code></pre><p>  (5) 运行autoconf 生成configure</p>
-<pre><code><span class="tag">%</span> autoconf
-</code></pre><p>  (6) 运行autoheader 生成config.h.in，使程序可移植</p>
-<pre><code><span class="tag">%</span> autoheader
-</code></pre><p>  (7) 创建空文件Makefile.am</p>
-<pre><code>% touch Makefile<span class="preprocessor">.am</span>
-
-写入以下内容：
-bin_PROGRAMS= hello
-hello_SOURCES= hello<span class="preprocessor">.c</span>
-</code></pre><p>  (8) 生成configure.in</p>
-<pre><code><span class="comment">%</span> <span class="comment">automake</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">add</span><span class="literal">-</span><span class="comment">missing</span>
-</code></pre><p>  (9) 编译运行</p>
-<pre><code>configure &amp;&amp; <span class="built_in">make</span> &amp;&amp; <span class="built_in">make</span> install
-</code></pre>
+</code></pre><p>
       
     </div>
     <footer>
       
+        
+          <div class="alignleft">
+            <a href="/2014/07/19/make-configure-file/#more" class="more-link">Read More</a>
+          </div>
         
         
       
@@ -235,67 +199,15 @@ dd <span class="keyword">if</span>=path/fedora.iso of=<span class="regexp">/dev/
 brew cask <span class="keyword">install</span> google-chrome
 </code></pre><p>  (2) 安装Chrome插件Proxy SwitchySharp</p>
 <pre><code><span class="label">https:</span>//chrome<span class="preprocessor">.google</span><span class="preprocessor">.com</span>/webstore/detail/proxy-switchysharp/dpplabbmogkhghncfbfdeeokoefdjegm
-</code></pre><p>  (3) 配置</p>
-<pre><code>emacs /usr/<span class="built_in">local</span>/etc/shadowsocks-libev.json
-
-修改下面的配置
- {
-      <span class="string">"server"</span>:<span class="string">""</span>,
-      <span class="string">"server_port"</span>:,
-      <span class="string">"local_port"</span>:,
-      <span class="string">"password"</span>:<span class="string">""</span>,
-      <span class="string">"timeout"</span>:<span class="number">600</span>,
-      <span class="string">"method"</span>:<span class="string">"aes-256-cfb"</span>
- }
-
-服务器请到<span class="keyword">https</span>://www.shadowsocks.net/<span class="built_in">get</span>发邮件获取，配置完成后是如下：
- {
-      <span class="string">"server"</span>:<span class="string">"hongxchen.github.io"</span>,
-      <span class="string">"server_port"</span>:<span class="number">1080</span>,
-      <span class="string">"local_port"</span>:<span class="number">8104</span>,
-      <span class="string">"password"</span>:<span class="string">"abc"</span>,
-      <span class="string">"timeout"</span>:<span class="number">600</span>,
-      <span class="string">"method"</span>:<span class="string">"aes-256-cfb"</span>
- }
- 注意：method字段一定要小写
-</code></pre><p>  (4) 配置Proxy SwitchySharp</p>
-<pre><code><span class="bullet">1. </span>添加新的的配置New Profile
-<span class="bullet">2. </span>Profile Name：Shadowsocks
-<span class="bullet">3. </span>选择Manual Configuration
-<span class="bullet">4. </span>在SOCKS Host中填入127.0.0.1和shadowsocks-libev.json中设置的local_port，如8104。HTTP Proxy，HTTPS Proxy，FTP Proxy空着不填。
-<span class="bullet">5. </span>选择SOCKS v5
-
-<span class="bullet">6. </span>切换到 Switch Rules
-<span class="bullet">7. </span>勾选Enable Switch Rules
-<span class="bullet">8. </span>勾选Online Rule List，在Rule List URL中填入http://autoproxy-gfwlist.googlecode.com/svn/trunk/gfwlist.txt，Proxy Profile选择Shadowsocks
-<span class="bullet">9. </span>勾选AutoProxy Compatible List
-</code></pre><p>  (5) 测试</p>
-<pre><code>终端执行
-/usr/<span class="built_in">local</span>/opt/shadowsocks<span class="attribute">-libev</span>/bin/ss<span class="attribute">-local</span> <span class="attribute">-c</span> /usr/<span class="built_in">local</span>/etc/shadowsocks<span class="attribute">-libev</span><span class="built_in">.</span>json
-
-打开Chrome，Proxy SwitchySharp选择Auto Switch Mode
-打开www<span class="built_in">.</span>youtube<span class="built_in">.</span>com等被墙网站，如果不能打开则https:<span class="comment">//www.shadowsocks.net/get发邮件获取其他服务的的配置</span>
-</code></pre><p>  (6) 开机启动</p>
-<pre><code>Ctrl+C关闭在终端中打开执行的ss-local
-
-制作/usr/local/opt/shadowsocks-libev/homebrew<span class="preprocessor">.mxcl</span><span class="preprocessor">.shadowsocks</span>-libev<span class="preprocessor">.plist</span>文件的软连接到~/Library/LaunchAgents
-% ln -s /usr/local/opt/shadowsocks-libev/homebrew<span class="preprocessor">.mxcl</span><span class="preprocessor">.shadowsocks</span>-libev<span class="preprocessor">.plist</span> ~/Library/LaunchAgents/homebrew<span class="preprocessor">.mxcl</span><span class="preprocessor">.shadowsocks</span>-libev<span class="preprocessor">.plist</span>
-</code></pre><p>  (7) 加载配置文件</p>
-<pre><code>launchctl load ~/Library/LaunchAgents/homebrew<span class="preprocessor">.mxcl</span><span class="preprocessor">.shadowsocks</span>-libev<span class="preprocessor">.plist</span>
-
-** 卸载为launchctl unload ~/Library/LaunchAgents/homebrew<span class="preprocessor">.mxcl</span><span class="preprocessor">.shadowsocks</span>-libev<span class="preprocessor">.plist</span>
-</code></pre><p>  (8) 完成</p>
-<pre><code>到此配置完成，以后开机打开Chrome就能够翻出墙外，https://www<span class="preprocessor">.shadowsocks</span><span class="preprocessor">.net</span>/get提供的服务器在一段时间后可能不能连接，只需关闭服务在shadowsocks-libev<span class="preprocessor">.json</span>文件中写入新的配置项，重新启动服务就行了。
-
-launchctl unload ~/Library/LaunchAgents/homebrew<span class="preprocessor">.mxcl</span><span class="preprocessor">.shadowsocks</span>-libev<span class="preprocessor">.plist</span>
-emacs /usr/local/etc/shadowsocks-libev<span class="preprocessor">.json</span>
-launchctl load ~/Library/LaunchAgents/homebrew<span class="preprocessor">.mxcl</span><span class="preprocessor">.shadowsocks</span>-libev<span class="preprocessor">.plist</span>
-</code></pre><p>  最后附上一个较稳定的服务器获取地址 <a href="https://xwall.io/" target="_blank">https://xwall.io/</a> ，目前注册有限额邀请码和免费VPN提供。</p>
-
+</code></pre><p>
       
     </div>
     <footer>
       
+        
+          <div class="alignleft">
+            <a href="/2014/07/19/shadowsocks-config/#more" class="more-link">Read More</a>
+          </div>
         
         
       
@@ -327,70 +239,15 @@ launchctl load ~/Library/LaunchAgents/homebrew<span class="preprocessor">.mxcl</
 <pre><code><span class="label">https:</span>//github<span class="preprocessor">.com</span>/hongxchen/emacs<span class="preprocessor">.d</span>
 </code></pre><p>  现在使用prelude的配置</p>
 <pre><code><span class="label">https:</span>//github<span class="preprocessor">.com</span>/bbatsov/prelude<span class="preprocessor">.git</span>
-</code></pre><p>  具体配置方法：</p>
-<p>  (1) 安装Emacs24</p>
-<pre><code>mac:
-brew <span class="keyword">install</span> emacs
-
-linux:
-sudo apt-get <span class="keyword">install</span> emacs
-sudo yum <span class="keyword">install</span> emacs
-</code></pre><p>  (2) 安装第三方插件</p>
-<pre><code>mac:
-brew install ctags <span class="built_in">global</span>
-
-linux:
-sudo apt-<span class="built_in">get</span> install ctags <span class="built_in">global</span> clang
-sudo yum install ctags <span class="built_in">global</span> clang
-</code></pre><p>  (3) 安装prelude的配置</p>
-<pre><code>curl <span class="attribute">-L</span> http:<span class="comment">//git.io/epre | sh</span>
-</code></pre><p>  (4) 自定义配置文件</p>
-<pre><code>cd ~<span class="subst">/</span><span class="built_in">.</span>emacs<span class="built_in">.</span>d<span class="subst">/</span>
-vim prelude<span class="attribute">-modules</span><span class="built_in">.</span>el
-
-选择需要打开的mode，去除开头的;;,我的设置如下：
-;;; Uncomment the modules you<span class="string">'d like to use and restart Prelude afterwards
-
-;; Emacs IRC client
-(require '</span>prelude<span class="attribute">-erc</span>)
-(<span class="keyword">require</span> <span class="string">'prelude-ido) ;; Super charges Emacs completion for C-x C-f and more
-;; (require '</span>prelude<span class="attribute">-helm</span>) ;; Interface for narrowing <span class="literal">and</span> search
-(<span class="keyword">require</span> <span class="string">'prelude-company)
-;; (require '</span>prelude<span class="attribute">-key</span><span class="attribute">-chord</span>) ;; Binds useful features <span class="keyword">to</span> key combinations
-;; (<span class="keyword">require</span> <span class="string">'prelude-mediawiki)
-;; (require '</span>prelude<span class="attribute">-evil</span>)
-
-;;; Programming languages support
-(<span class="keyword">require</span> <span class="string">'prelude-c)
-;; (require '</span>prelude<span class="attribute">-clojure</span>)
-;; (<span class="keyword">require</span> <span class="string">'prelude-coffee)
-;; (require '</span>prelude<span class="attribute">-common</span><span class="attribute">-lisp</span>)
-;; (<span class="keyword">require</span> <span class="string">'prelude-css)
-(require '</span>prelude<span class="attribute">-emacs</span><span class="attribute">-lisp</span>)
-(<span class="keyword">require</span> <span class="string">'prelude-erlang)
-(require '</span>prelude<span class="attribute">-go</span>)
-;; (<span class="keyword">require</span> <span class="string">'prelude-haskell)
-;; (require '</span>prelude<span class="attribute">-js</span>)
-;; (<span class="keyword">require</span> <span class="string">'prelude-latex)
-(require '</span>prelude<span class="attribute">-lisp</span>)
-(<span class="keyword">require</span> <span class="string">'prelude-org) ;; Org-mode helps you keep TODO lists, notes and more
-;; (require '</span>prelude<span class="attribute">-perl</span>)
-;; (<span class="keyword">require</span> <span class="string">'prelude-python)
-;; (require '</span>prelude<span class="attribute">-ruby</span>)
-;; (<span class="keyword">require</span> <span class="string">'prelude-scala)
-(require '</span>prelude<span class="attribute">-scheme</span>)
-(<span class="keyword">require</span> <span class="string">'prelude-shell)
-;; (require '</span>prelude<span class="attribute">-scss</span>)
-;; (<span class="keyword">require</span> <span class="string">'prelude-web) ;; Emacs mode for web templates
-(require '</span>prelude<span class="attribute">-xml</span>)
-</code></pre><p>  (5) 安装mode</p>
-<pre><code>打开emacs，会自动下载<span class="keyword">mode</span>所需的文件
-</code></pre><p>  (6) 重启emacs</p>
-
+</code></pre><p>  具体配置方法如下：<br>
       
     </div>
     <footer>
       
+        
+          <div class="alignleft">
+            <a href="/2014/07/19/my-emacs-config/#more" class="more-link">Read More</a>
+          </div>
         
         
       
@@ -429,87 +286,15 @@ vim prelude<span class="attribute">-modules</span><span class="built_in">.</span
 
 <span class="keyword">On</span> Arch
 <span class="subst">%</span> sudo pacman <span class="attribute">-S</span> base<span class="attribute">-devel</span> git pkg<span class="attribute">-config</span> autoconf automake
-</code></pre><p>  (3) 获取VLC源码</p>
-<pre><code>git clone git://git<span class="preprocessor">.videolan</span><span class="preprocessor">.org</span>/vlc<span class="preprocessor">.git</span>
-</code></pre><p>   ** 你也可以之间下载源代码包进行编译</p>
-<pre><code>wget ftp://ftp<span class="preprocessor">.videolan</span><span class="preprocessor">.org</span>/pub/videolan/vlc/<span class="number">2.1</span><span class="number">.5</span>/vlc-<span class="number">2.1</span><span class="number">.5</span><span class="preprocessor">.tar</span><span class="preprocessor">.xz</span>
-</code></pre><p>  (4) bootstrapping the source tree</p>
-<pre><code><span class="built_in">cd</span> vlc
-./bootstrap
-</code></pre><p>  (5) 获取编译所需的第三方库</p>
-<pre><code><span class="keyword">On</span> Debian <span class="literal">or</span> Ubuntu
-<span class="subst">%</span> sudo apt<span class="attribute">-get</span> build<span class="attribute">-dep</span> vlc
-
-<span class="keyword">On</span> OpenSuSE
-<span class="subst">%</span> sudo zypper si <span class="attribute">-d</span> vlc
-<span class="subst">**</span> OpenSuSE必须先添加VLC repositories
-sudo zypper ar http:<span class="comment">//download.videolan.org/pub/vlc/SuSE/&lt;openSUSEversion&gt; VLC</span>
-替换 <span class="subst">&lt;</span>openSUSEversion<span class="subst">&gt;</span> 为你当前系统的版本，如 (<span class="number">12.1</span>, <span class="number">11.4</span>, <span class="number">11.3</span>, <span class="number">11.2</span> <span class="literal">or</span> <span class="number">11.1</span>)
-</code></pre><p>  (6) 编译第三方库</p>
-<pre><code>安装所需的编译工具链
-% apt-<span class="keyword">get</span> install subversion yasm cvs cmake
-
-cd contrib
-mkdir <span class="keyword">native</span>
-cd <span class="keyword">native</span>
-../bootstrap
-make
-
-make过程中有可能出现第三方库下载失败，请参考错误输出手动下载并放在 contrib/tarballs/ 目录下
-</code></pre><p>  (7) Configure VLC</p>
-<pre><code>在VLC目录执行
-<span class="built_in">.</span>/configure
-
-如果你想要调试版，需要加入一下参数(请参考https:<span class="comment">//wiki.videolan.org/Debug/)</span>
-<span class="built_in">.</span>/configure <span class="subst">--</span>enable<span class="attribute">-debug</span> <span class="subst">--</span>disable<span class="attribute">-optimizations</span>
-同时需要去除<span class="subst">--</span>enable<span class="attribute">-release</span>
-
-自定义编译选项请参考https:<span class="comment">//wiki.videolan.org/Configure/</span>
-
-<span class="built_in">.</span>/configure <span class="subst">--</span>enable<span class="attribute">-x11</span> <span class="subst">--</span>enable<span class="attribute">-xvideo</span> <span class="subst">--</span>enable<span class="attribute">-sdl</span> <span class="subst">--</span>enable<span class="attribute">-avcodec</span> <span class="subst">--</span>enable<span class="attribute">-avformat</span> <span class="subst">\</span>
-<span class="subst">--</span>enable<span class="attribute">-swscale</span> <span class="subst">--</span>enable<span class="attribute">-mad</span> <span class="subst">--</span>enable<span class="attribute">-libdvbpsi</span> <span class="subst">--</span>enable<span class="attribute">-a52</span> <span class="subst">--</span>enable<span class="attribute">-libmpeg2</span> <span class="subst">--</span>enable<span class="attribute">-dvdnav</span> <span class="subst">\</span>
-<span class="subst">--</span>enable<span class="attribute">-faad</span> <span class="subst">--</span>enable<span class="attribute">-vorbis</span> <span class="subst">--</span>enable<span class="attribute">-ogg</span> <span class="subst">--</span>enable<span class="attribute">-theora</span> <span class="subst">--</span>enable<span class="attribute">-faac</span> <span class="subst">--</span>enable<span class="attribute">-mkv</span> <span class="subst">--</span>enable<span class="attribute">-freetype</span> <span class="subst">\</span>
-<span class="subst">--</span>enable<span class="attribute">-fribidi</span> <span class="subst">--</span>enable<span class="attribute">-speex</span> <span class="subst">--</span>enable<span class="attribute">-flac</span> <span class="subst">--</span>enable<span class="attribute">-live555</span> <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-live555</span><span class="attribute">-tree</span><span class="subst">=</span>/usr/lib/live <span class="subst">\</span>
-<span class="subst">--</span>enable<span class="attribute">-caca</span> <span class="subst">--</span>enable<span class="attribute">-skins</span> <span class="subst">--</span>enable<span class="attribute">-skins2</span> <span class="subst">--</span>enable<span class="attribute">-alsa</span> <span class="subst">--</span>enable<span class="attribute">-qt4</span> <span class="subst">--</span>enable<span class="attribute">-ncurses</span>
-
-Linux：
-<span class="built_in">.</span>/configure <span class="subst">--</span>enable<span class="attribute">-x11</span> <span class="subst">--</span>enable<span class="attribute">-xvideo</span> <span class="subst">--</span>disable<span class="attribute">-gtk</span> <span class="subst">\</span>
-<span class="subst">--</span>enable<span class="attribute">-sdl</span> <span class="subst">--</span>enable<span class="attribute">-ffmpeg</span> <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-ffmpeg</span><span class="attribute">-mp3lame</span> <span class="subst">\</span>
-<span class="subst">--</span>enable<span class="attribute">-mad</span> <span class="subst">--</span>enable<span class="attribute">-libdvbpsi</span> <span class="subst">--</span>enable<span class="attribute">-a52</span> <span class="subst">--</span>enable<span class="attribute">-dts</span> <span class="subst">\</span>
-<span class="subst">--</span>enable<span class="attribute">-libmpeg2</span> <span class="subst">--</span>enable<span class="attribute">-dvdnav</span> <span class="subst">--</span>enable<span class="attribute">-faad</span> <span class="subst">\</span>
-<span class="subst">--</span>enable<span class="attribute">-vorbis</span> <span class="subst">--</span>enable<span class="attribute">-ogg</span> <span class="subst">--</span>enable<span class="attribute">-theora</span> <span class="subst">--</span>enable<span class="attribute">-faac</span><span class="subst">\</span>
-<span class="subst">--</span>enable<span class="attribute">-mkv</span> <span class="subst">--</span>enable<span class="attribute">-freetype</span> <span class="subst">--</span>enable<span class="attribute">-fribidi</span> <span class="subst">\</span>
-<span class="subst">--</span>enable<span class="attribute">-speex</span> <span class="subst">--</span>enable<span class="attribute">-flac</span> <span class="subst">--</span>enable<span class="attribute">-livedotcom</span> <span class="subst">\</span>
-<span class="subst">--</span><span class="keyword">with</span><span class="attribute">-livedotcom</span><span class="attribute">-tree</span><span class="subst">=</span>/usr/lib/live <span class="subst">--</span>enable<span class="attribute">-caca</span> <span class="subst">\</span>
-<span class="subst">--</span>enable<span class="attribute">-skins</span> <span class="subst">--</span>enable<span class="attribute">-skins2</span> <span class="subst">--</span>enable<span class="attribute">-alsa</span> <span class="subst">--</span>disable<span class="attribute">-kde</span><span class="subst">\</span>
-<span class="subst">--</span>disable<span class="attribute">-qt</span> <span class="subst">--</span>enable<span class="attribute">-wxwindows</span> <span class="subst">--</span>enable<span class="attribute">-ncurses</span> <span class="subst">\</span>
-<span class="subst">--</span>enable<span class="attribute">-release</span>
-
-Linux GIT
-<span class="built_in">.</span>/configure <span class="subst">--</span>enable<span class="attribute">-x11</span> <span class="subst">--</span>enable<span class="attribute">-xvideo</span> <span class="subst">--</span>disable<span class="attribute">-gtk</span> <span class="subst">\</span>
-<span class="subst">--</span>enable<span class="attribute">-sdl</span> <span class="subst">--</span>enable<span class="attribute">-ffmpeg</span> <span class="subst">--</span><span class="keyword">with</span><span class="attribute">-ffmpeg</span><span class="attribute">-mp3lame</span> <span class="subst">\</span>
-<span class="subst">--</span>enable<span class="attribute">-mad</span> <span class="subst">--</span>enable<span class="attribute">-libdvbpsi</span> <span class="subst">--</span>enable<span class="attribute">-a52</span> <span class="subst">--</span>enable<span class="attribute">-dca</span> <span class="subst">\</span>
-<span class="subst">--</span>enable<span class="attribute">-libmpeg2</span> <span class="subst">--</span>enable<span class="attribute">-dvdnav</span> <span class="subst">--</span>enable<span class="attribute">-faad</span> <span class="subst">\</span>
-<span class="subst">--</span>enable<span class="attribute">-vorbis</span> <span class="subst">--</span>enable<span class="attribute">-ogg</span> <span class="subst">--</span>enable<span class="attribute">-theora</span> <span class="subst">--</span>enable<span class="attribute">-faac</span><span class="subst">\</span>
-<span class="subst">--</span>enable<span class="attribute">-mkv</span> <span class="subst">--</span>enable<span class="attribute">-freetype</span> <span class="subst">--</span>enable<span class="attribute">-fribidi</span> <span class="subst">\</span>
-<span class="subst">--</span>enable<span class="attribute">-speex</span> <span class="subst">--</span>enable<span class="attribute">-flac</span> <span class="subst">--</span>enable<span class="attribute">-livedotcom</span> <span class="subst">\</span>
-<span class="subst">--</span><span class="keyword">with</span><span class="attribute">-livedotcom</span><span class="attribute">-tree</span><span class="subst">=</span>/usr/lib/live <span class="subst">--</span>enable<span class="attribute">-caca</span> <span class="subst">\</span>
-<span class="subst">--</span>enable<span class="attribute">-skins</span> <span class="subst">--</span>enable<span class="attribute">-skins2</span> <span class="subst">--</span>enable<span class="attribute">-alsa</span> <span class="subst">--</span>disable<span class="attribute">-kde</span><span class="subst">\</span>
-<span class="subst">--</span>disable<span class="attribute">-qt</span> <span class="subst">--</span>enable<span class="attribute">-wxwindows</span> <span class="subst">--</span>enable<span class="attribute">-ncurses</span> <span class="subst">\</span>
-<span class="subst">--</span>enable<span class="attribute">-asa</span> <span class="subst">--</span>enable<span class="attribute">-release</span>
-</code></pre><p>  (8) 编译VLC</p>
-<pre><code><span class="built_in">make</span>
-</code></pre><p>  (9) 安装VLC</p>
-<pre><code>make <span class="keyword">install</span>
-</code></pre><p>  (10) 卸载</p>
-<pre><code><span class="built_in">make</span> uninstall
-</code></pre><p>  (11) 清理工程</p>
-<pre><code><span class="built_in">make</span> clean
-</code></pre>
+</code></pre><p>
       
     </div>
     <footer>
       
+        
+          <div class="alignleft">
+            <a href="/2014/07/19/vlc-compile-on-linux/#more" class="more-link">Read More</a>
+          </div>
         
         
       

@@ -14,7 +14,12 @@ hello.c
 int main(int argc, char *argv[]) {
     double sec;
     struct timeval tv;
-    ge">
+    gettimeofday(&amp;amp;tv, NULL);
+    sec = tv.tv_sec;
+    sec += tv.tv_usec/1000000.0;
+    printf (&quot;hello word!\nsec = %e\n&quot;, sec);
+    exit(0);
+}">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -83,7 +88,7 @@ int main(int argc, char *argv[]) {
     <span class="built_in">printf</span> (<span class="string">"hello word!\nsec = %e\n"</span>, sec);
     <span class="built_in">exit</span>(<span class="number">0</span>);
 }
-</code></pre><p>  (2) autoscan 生成文件configure.scan</p>
+</code></pre><p><a id="more"></a><br>  (2) autoscan 生成文件configure.scan</p>
 <pre><code><span class="tag">%</span> autoscan
 </code></pre><p>  (3) 修改configure.scan</p>
 <pre><code>修改后的文件内容如下：

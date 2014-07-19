@@ -10,7 +10,13 @@
   (1) 安装linux，本人使用Xubuntu 14.04和Fedora20
   (2) 安装所需要的编译器和工具链
 On Fedora
-% sudo yum insta">
+% sudo yum install git libtool pkgconfig
+
+On Debian or Ubuntu
+% sudo apt-get install git libtool build-essential pkg-config autoconf
+
+On Arch
+% sudo pacman -S base-devel git pkg-config autoconf automake">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -76,7 +82,7 @@ On Fedora
 
 <span class="keyword">On</span> Arch
 <span class="subst">%</span> sudo pacman <span class="attribute">-S</span> base<span class="attribute">-devel</span> git pkg<span class="attribute">-config</span> autoconf automake
-</code></pre><p>  (3) 获取VLC源码</p>
+</code></pre><p><a id="more"></a><br>  (3) 获取VLC源码</p>
 <pre><code>git clone git://git<span class="preprocessor">.videolan</span><span class="preprocessor">.org</span>/vlc<span class="preprocessor">.git</span>
 </code></pre><p>   ** 你也可以之间下载源代码包进行编译</p>
 <pre><code>wget ftp://ftp<span class="preprocessor">.videolan</span><span class="preprocessor">.org</span>/pub/videolan/vlc/<span class="number">2.1</span><span class="number">.5</span>/vlc-<span class="number">2.1</span><span class="number">.5</span><span class="preprocessor">.tar</span><span class="preprocessor">.xz</span>
