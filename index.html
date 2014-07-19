@@ -50,6 +50,99 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-07-19T10:41:34.000Z"><a href="/2014/07/19/shadowsocks-config/">7月 19 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/19/shadowsocks-config/">shadowsocks配置</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>(1) 安装Shadowsocks和Chrome</p>
+<pre><code>brew <span class="keyword">install</span> shadowsocks-libev
+brew cask <span class="keyword">install</span> google-chrome
+</code></pre><p>  (2) 安装Chrome插件Proxy SwitchySharp</p>
+<pre><code><span class="label">https:</span>//chrome<span class="preprocessor">.google</span><span class="preprocessor">.com</span>/webstore/detail/proxy-switchysharp/dpplabbmogkhghncfbfdeeokoefdjegm
+</code></pre><p>  (3) 配置</p>
+<pre><code>emacs /usr/<span class="built_in">local</span>/etc/shadowsocks-libev.json
+
+修改下面的配置
+ {
+      <span class="string">"server"</span>:<span class="string">""</span>,
+      <span class="string">"server_port"</span>:,
+      <span class="string">"local_port"</span>:,
+      <span class="string">"password"</span>:<span class="string">""</span>,
+      <span class="string">"timeout"</span>:<span class="number">600</span>,
+      <span class="string">"method"</span>:<span class="string">"aes-256-cfb"</span>
+ }
+
+服务器请到<span class="keyword">https</span>://www.shadowsocks.net/<span class="built_in">get</span>发邮件获取，配置完成后是如下：
+ {
+      <span class="string">"server"</span>:<span class="string">"hongxchen.github.io"</span>,
+      <span class="string">"server_port"</span>:<span class="number">1080</span>,
+      <span class="string">"local_port"</span>:<span class="number">8104</span>,
+      <span class="string">"password"</span>:<span class="string">"abc"</span>,
+      <span class="string">"timeout"</span>:<span class="number">600</span>,
+      <span class="string">"method"</span>:<span class="string">"aes-256-cfb"</span>
+ }
+ 注意：method字段一定要小写
+</code></pre><p>  (4) 配置Proxy SwitchySharp</p>
+<pre><code><span class="bullet">1. </span>添加新的的配置New Profile
+<span class="bullet">2. </span>Profile Name：Shadowsocks
+<span class="bullet">3. </span>选择Manual Configuration
+<span class="bullet">4. </span>在SOCKS Host中填入127.0.0.1和shadowsocks-libev.json中设置的local_port，如8104。HTTP Proxy，HTTPS Proxy，FTP Proxy空着不填。
+<span class="bullet">5. </span>选择SOCKS v5
+
+<span class="bullet">6. </span>切换到 Switch Rules
+<span class="bullet">7. </span>勾选Enable Switch Rules
+<span class="bullet">8. </span>勾选Online Rule List，在Rule List URL中填入http://autoproxy-gfwlist.googlecode.com/svn/trunk/gfwlist.txt，Proxy Profile选择Shadowsocks
+<span class="bullet">9. </span>勾选AutoProxy Compatible List
+</code></pre><p>  (5) 测试</p>
+<pre><code>终端执行
+/usr/<span class="built_in">local</span>/opt/shadowsocks<span class="attribute">-libev</span>/bin/ss<span class="attribute">-local</span> <span class="attribute">-c</span> /usr/<span class="built_in">local</span>/etc/shadowsocks<span class="attribute">-libev</span><span class="built_in">.</span>json
+
+打开Chrome，Proxy SwitchySharp选择Auto Switch Mode
+打开www<span class="built_in">.</span>youtube<span class="built_in">.</span>com等被墙网站，如果不能打开则https:<span class="comment">//www.shadowsocks.net/get发邮件获取其他服务的的配置</span>
+</code></pre><p>  (6) 开机启动</p>
+<pre><code>Ctrl+C关闭在终端中打开执行的ss-local
+
+制作/usr/local/opt/shadowsocks-libev/homebrew<span class="preprocessor">.mxcl</span><span class="preprocessor">.shadowsocks</span>-libev<span class="preprocessor">.plist</span>文件的软连接到~/Library/LaunchAgents
+% ln -s /usr/local/opt/shadowsocks-libev/homebrew<span class="preprocessor">.mxcl</span><span class="preprocessor">.shadowsocks</span>-libev<span class="preprocessor">.plist</span> ~/Library/LaunchAgents/homebrew<span class="preprocessor">.mxcl</span><span class="preprocessor">.shadowsocks</span>-libev<span class="preprocessor">.plist</span>
+</code></pre><p>  (7) 加载配置文件</p>
+<pre><code>launchctl load ~/Library/LaunchAgents/homebrew<span class="preprocessor">.mxcl</span><span class="preprocessor">.shadowsocks</span>-libev<span class="preprocessor">.plist</span>
+
+** 卸载为launchctl unload ~/Library/LaunchAgents/homebrew<span class="preprocessor">.mxcl</span><span class="preprocessor">.shadowsocks</span>-libev<span class="preprocessor">.plist</span>
+</code></pre><p>  (8) 完成</p>
+<pre><code>到此配置完成，以后开机打开Chrome就能够翻出墙外，https://www<span class="preprocessor">.shadowsocks</span><span class="preprocessor">.net</span>/get提供的服务器在一段时间后可能不能连接，只需关闭服务在shadowsocks-libev<span class="preprocessor">.json</span>文件中写入新的配置项，重新启动服务就行了。
+
+launchctl unload ~/Library/LaunchAgents/homebrew<span class="preprocessor">.mxcl</span><span class="preprocessor">.shadowsocks</span>-libev<span class="preprocessor">.plist</span>
+emacs /usr/local/etc/shadowsocks-libev<span class="preprocessor">.json</span>
+launchctl load ~/Library/LaunchAgents/homebrew<span class="preprocessor">.mxcl</span><span class="preprocessor">.shadowsocks</span>-libev<span class="preprocessor">.plist</span>
+</code></pre><p>  最后附上一个较稳定的服务器获取地址 <a href="https://xwall.io/" target="_blank">https://xwall.io/</a> ，目前注册有限额邀请码和免费VPN提供。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-07-19T10:19:19.000Z"><a href="/2014/07/19/my-emacs-config/">7月 19 2014</a></time>
       
       
@@ -314,6 +407,8 @@ Linux GIT
   
     <li><a href="/categories/MPlayer/">MPlayer</a><small>1</small></li>
   
+    <li><a href="/categories/Shadowsocks/">Shadowsocks</a><small>1</small></li>
+  
     <li><a href="/categories/VLC/">VLC</a><small>1</small></li>
   
   </ul>
@@ -325,7 +420,7 @@ Linux GIT
   <h3 class="title">标签</h3>
   <ul class="entry">
   
-    <li><a href="/tags/文章/">文章</a><small>3</small></li>
+    <li><a href="/tags/文章/">文章</a><small>4</small></li>
   
   </ul>
 </div>
