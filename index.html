@@ -50,6 +50,92 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-07-19T11:42:51.000Z"><a href="/2014/07/19/make-configure-file/">7月 19 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/19/make-configure-file/">制作configure文件</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>(1) 写代码</p>
+<pre><code>hello.c
+<span class="preprocessor">#include &lt;stdio.h&gt;</span>
+<span class="preprocessor">#include &lt;sys/time.h&gt;</span>
+
+<span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[]) {
+    <span class="keyword">double</span> sec;
+    <span class="keyword">struct</span> timeval tv;
+    gettimeofday(&amp;tv, NULL);
+    sec = tv.tv_sec;
+    sec += tv.tv_usec/<span class="number">1000000.0</span>;
+    <span class="built_in">printf</span> (<span class="string">"hello word!\nsec = %e\n"</span>, sec);
+    <span class="built_in">exit</span>(<span class="number">0</span>);
+}
+</code></pre><p>  (2) autoscan 生成文件configure.scan</p>
+<pre><code><span class="tag">%</span> autoscan
+</code></pre><p>  (3) 修改configure.scan</p>
+<pre><code>修改后的文件内容如下：
+<span class="comment">-- Autoconf --</span>
+Process this <span class="built_in">file</span> <span class="operator">with</span> autoconf <span class="built_in">to</span> produce <span class="operator">a</span> configure script.
+AC_PREREQ(<span class="number">2.61</span>)
+AC_INIT(hello, <span class="number">1.0</span>) <span class="comment">#修改</span>
+AM_INIT_AUTOMAKE(hello, <span class="number">1.0</span>) <span class="comment">#添加</span>
+AC_CONFIG_SRCDIR([hello.c])
+AC_CONFIG_HEADER([config.h])
+Checks <span class="keyword">for</span> programs.
+AC_PROG_CC
+Checks <span class="keyword">for</span> libraries.
+Checks <span class="keyword">for</span> header <span class="built_in">files</span>.
+AC_CHECK_HEADERS([sys/<span class="built_in">time</span>.h])
+Checks <span class="keyword">for</span> typedefs, structures, <span class="operator">and</span> compiler characteristics.
+AC_HEADER_TIME
+Checks <span class="keyword">for</span> library functions.
+AC_CHECK_FUNCS([gettimeofday])
+AC_CONFIG_FILES([Makefile]) <span class="comment">#添加</span>
+AC_OUTPUT
+</code></pre><p>  (3) 3、文件改名configure.scan为configure.in</p>
+<pre><code>% mv configure<span class="preprocessor">.scan</span> configure<span class="preprocessor">.in</span>
+</code></pre><p>  (4) 4、运行aclocal 生成 aclocal.m4</p>
+<pre><code><span class="tag">%</span> aclocal
+</code></pre><p>  (5) 运行autoconf 生成configure</p>
+<pre><code><span class="tag">%</span> autoconf
+</code></pre><p>  (6) 运行autoheader 生成config.h.in，使程序可移植</p>
+<pre><code><span class="tag">%</span> autoheader
+</code></pre><p>  (7) 创建空文件Makefile.am</p>
+<pre><code>% touch Makefile<span class="preprocessor">.am</span>
+
+写入以下内容：
+bin_PROGRAMS= hello
+hello_SOURCES= hello<span class="preprocessor">.c</span>
+</code></pre><p>  (8) 生成configure.in</p>
+<pre><code><span class="comment">%</span> <span class="comment">automake</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">add</span><span class="literal">-</span><span class="comment">missing</span>
+</code></pre><p>  (9) 编译运行</p>
+<pre><code>configure &amp;&amp; <span class="built_in">make</span> &amp;&amp; <span class="built_in">make</span> install
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-07-19T11:29:19.000Z"><a href="/2014/07/19/making-fedora-usb-media-with-dd/">7月 19 2014</a></time>
       
       
@@ -487,6 +573,8 @@ Linux GIT
   
     <li><a href="/categories/Fedora/">Fedora</a><small>1</small></li>
   
+    <li><a href="/categories/GNU/">GNU</a><small>1</small></li>
+  
     <li><a href="/categories/MPlayer/">MPlayer</a><small>1</small></li>
   
     <li><a href="/categories/Shadowsocks/">Shadowsocks</a><small>1</small></li>
@@ -502,7 +590,7 @@ Linux GIT
   <h3 class="title">标签</h3>
   <ul class="entry">
   
-    <li><a href="/tags/文章/">文章</a><small>6</small></li>
+    <li><a href="/tags/文章/">文章</a><small>7</small></li>
   
   </ul>
 </div>

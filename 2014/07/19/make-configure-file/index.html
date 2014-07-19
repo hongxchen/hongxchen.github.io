@@ -3,16 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Emacs compile on Linux | hongxchen&#39;s blog</title>
+  <title>制作configure文件 | hongxchen&#39;s blog</title>
   <meta name="author" content="hongxchen">
   
-  <meta name="description" content="% yum groupinstall “Development Tools”
-  % yum install gtk+-devel gtk2-devel libXpm-devel libpng-devel giflib-devel libpng-devel libtiff-devel libjpeg">
+  <meta name="description" content="(1) 写代码
+hello.c
+#include &amp;lt;stdio.h&amp;gt;
+#include &amp;lt;sys/time.h&amp;gt;
+
+int main(int argc, char *argv[]) {
+    double sec;
+    struct timeval tv;
+    ge">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="Emacs compile on Linux"/>
+  <meta property="og:title" content="制作configure文件"/>
   <meta property="og:site_name" content="hongxchen&#39;s blog"/>
 
   
@@ -52,20 +59,71 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-07-19T11:24:06.000Z"><a href="/2014/07/19/emacs-compile-on-linux/">7月 19 2014</a></time>
+        <time datetime="2014-07-19T11:42:51.000Z"><a href="/2014/07/19/make-configure-file/">7月 19 2014</a></time>
       
       
   
-    <h1 class="title">Emacs compile on Linux</h1>
+    <h1 class="title">制作configure文件</h1>
   
 
     </header>
     <div class="entry">
       
-        <p>% yum groupinstall “Development Tools”</p>
-<p>  % yum install gtk+-devel gtk2-devel libXpm-devel libpng-devel giflib-devel libpng-devel libtiff-devel libjpeg-devel ncurses-devel gpm-devel dbus-devel dbus-glib-devel dbus-python GConf2-devel pkgconfig libXft-devel</p>
-<p>  % ./configure —prefix=/usr/local —with-x-toolkit=gtk</p>
+        <p>(1) 写代码</p>
+<pre><code>hello.c
+<span class="preprocessor">#include &lt;stdio.h&gt;</span>
+<span class="preprocessor">#include &lt;sys/time.h&gt;</span>
 
+<span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[]) {
+    <span class="keyword">double</span> sec;
+    <span class="keyword">struct</span> timeval tv;
+    gettimeofday(&amp;tv, NULL);
+    sec = tv.tv_sec;
+    sec += tv.tv_usec/<span class="number">1000000.0</span>;
+    <span class="built_in">printf</span> (<span class="string">"hello word!\nsec = %e\n"</span>, sec);
+    <span class="built_in">exit</span>(<span class="number">0</span>);
+}
+</code></pre><p>  (2) autoscan 生成文件configure.scan</p>
+<pre><code><span class="tag">%</span> autoscan
+</code></pre><p>  (3) 修改configure.scan</p>
+<pre><code>修改后的文件内容如下：
+<span class="comment">-- Autoconf --</span>
+Process this <span class="built_in">file</span> <span class="operator">with</span> autoconf <span class="built_in">to</span> produce <span class="operator">a</span> configure script.
+AC_PREREQ(<span class="number">2.61</span>)
+AC_INIT(hello, <span class="number">1.0</span>) <span class="comment">#修改</span>
+AM_INIT_AUTOMAKE(hello, <span class="number">1.0</span>) <span class="comment">#添加</span>
+AC_CONFIG_SRCDIR([hello.c])
+AC_CONFIG_HEADER([config.h])
+Checks <span class="keyword">for</span> programs.
+AC_PROG_CC
+Checks <span class="keyword">for</span> libraries.
+Checks <span class="keyword">for</span> header <span class="built_in">files</span>.
+AC_CHECK_HEADERS([sys/<span class="built_in">time</span>.h])
+Checks <span class="keyword">for</span> typedefs, structures, <span class="operator">and</span> compiler characteristics.
+AC_HEADER_TIME
+Checks <span class="keyword">for</span> library functions.
+AC_CHECK_FUNCS([gettimeofday])
+AC_CONFIG_FILES([Makefile]) <span class="comment">#添加</span>
+AC_OUTPUT
+</code></pre><p>  (3) 3、文件改名configure.scan为configure.in</p>
+<pre><code>% mv configure<span class="preprocessor">.scan</span> configure<span class="preprocessor">.in</span>
+</code></pre><p>  (4) 4、运行aclocal 生成 aclocal.m4</p>
+<pre><code><span class="tag">%</span> aclocal
+</code></pre><p>  (5) 运行autoconf 生成configure</p>
+<pre><code><span class="tag">%</span> autoconf
+</code></pre><p>  (6) 运行autoheader 生成config.h.in，使程序可移植</p>
+<pre><code><span class="tag">%</span> autoheader
+</code></pre><p>  (7) 创建空文件Makefile.am</p>
+<pre><code>% touch Makefile<span class="preprocessor">.am</span>
+
+写入以下内容：
+bin_PROGRAMS= hello
+hello_SOURCES= hello<span class="preprocessor">.c</span>
+</code></pre><p>  (8) 生成configure.in</p>
+<pre><code><span class="comment">%</span> <span class="comment">automake</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">add</span><span class="literal">-</span><span class="comment">missing</span>
+</code></pre><p>  (9) 编译运行</p>
+<pre><code>configure &amp;&amp; <span class="built_in">make</span> &amp;&amp; <span class="built_in">make</span> install
+</code></pre>
       
     </div>
     <footer>
@@ -73,7 +131,7 @@
         
   
   <div class="categories">
-    <a href="/categories/Emacs/">Emacs</a>
+    <a href="/categories/GNU/">GNU</a>
   </div>
 
         
@@ -122,7 +180,7 @@
   }(document, 'script', 'facebook-jssdk'));
 </script>
 
-<div class="fb-comments" data-href="http://hongxchen.github.io/2014/07/19/emacs-compile-on-linux/" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+<div class="fb-comments" data-href="http://hongxchen.github.io/2014/07/19/make-configure-file/" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
       
   
 </section>
