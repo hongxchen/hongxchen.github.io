@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://hongxchen.github.io/"/>
-  <updated>2014-07-19T15:32:30.057Z</updated>
+  <updated>2014-07-21T14:50:32.181Z</updated>
   <id>http://hongxchen.github.io/</id>
   
   <author>
@@ -311,7 +311,7 @@ vim prelude<span class="attribute">-modules</span><span class="built_in">.</span
     <link href="http://hongxchen.github.io/2014/07/19/vlc-compile-on-linux/"/>
     <id>http://hongxchen.github.io/2014/07/19/vlc-compile-on-linux/</id>
     <published>2014-07-19T08:10:33.000Z</published>
-    <updated>2014-07-19T12:03:53.000Z</updated>
+    <updated>2014-07-21T14:49:54.000Z</updated>
     <content type="html"><![CDATA[<p>以下所有过程均参考VLC Building文档，<a href="https://wiki.videolan.org/UnixCompile/" target="_blank">https://wiki.videolan.org/UnixCompile/</a></p>
 <p>  (1) 安装linux，本人使用Xubuntu 14.04和Fedora20</p>
 <p>  (2) 安装所需要的编译器和工具链</p>
@@ -331,7 +331,10 @@ vim prelude<span class="attribute">-modules</span><span class="built_in">.</span
 <pre><code><span class="built_in">cd</span> vlc
 ./bootstrap
 </code></pre><p>  (5) 获取编译所需的第三方库</p>
-<pre><code><span class="keyword">On</span> Debian <span class="literal">or</span> Ubuntu
+<pre><code><span class="keyword">On</span> Fedora
+<span class="subst">%</span> sudo yum<span class="attribute">-builddep</span> vlc
+
+<span class="keyword">On</span> Debian <span class="literal">or</span> Ubuntu
 <span class="subst">%</span> sudo apt<span class="attribute">-get</span> build<span class="attribute">-dep</span> vlc
 
 <span class="keyword">On</span> OpenSuSE
@@ -349,7 +352,7 @@ cd <span class="keyword">native</span>
 ../bootstrap
 make
 
-make过程中有可能出现第三方库下载失败，请参考错误输出手动下载并放在 contrib/tarballs/ 目录下
+make过程中有可能出现第三方库下载失败，请参考错误输出手动下载并放在 contrib/tarballs/ 目录下，也可以到这里下载http:<span class="comment">//download.videolan.org/contrib/</span>
 </code></pre><p>  (7) Configure VLC</p>
 <pre><code>在VLC目录执行
 <span class="built_in">.</span>/configure
