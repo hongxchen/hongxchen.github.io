@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://hongxchen.github.io/2014/07/23/vlc-source-code-01/</loc>
+    <lastmod>2014-07-22T16:25:49.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://hongxchen.github.io/2014/07/19/vlc-compile-on-linux/</loc>
     <lastmod>2014-07-21T14:49:54.000Z</lastmod>
   </url>
