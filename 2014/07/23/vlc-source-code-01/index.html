@@ -6,6 +6,8 @@
   <title>VLC源码分析01 | hongxchen&#39;s blog</title>
   <meta name="author" content="hongxchen">
   
+  <meta name="description" content="VLC是开源的并且相当受欢迎的媒体处理软件。我们可以认为VLC是一个完善的多媒体框架，就如同Windows上的DirectShow或Unix上的GStreamer。在必要时它可以动态的加载第三方插件进行媒体处理。因为VLC使用了大量的第三方库，自身的代码量也十分庞大，编译起来也相对比较麻烦，所以网上相关的文章也相对较少，我们将在以下的文章中对VLC做一次深入的剖析。关于VLC的编译请移步http://hongxchen.github.io/2014/07/19/vlc-compile-on-linux/">
+  
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -219,7 +221,11 @@
     </header>
     <div class="entry">
       
-        
+        <p>VLC是开源的并且相当受欢迎的媒体处理软件。我们可以认为VLC是一个完善的多媒体框架，就如同Windows上的DirectShow或Unix上的GStreamer。在必要时它可以动态的加载第三方插件进行媒体处理。因为VLC使用了大量的第三方库，自身的代码量也十分庞大，编译起来也相对比较麻烦，所以网上相关的文章也相对较少，我们将在以下的文章中对VLC做一次深入的剖析。关于VLC的编译请移步<a href="http://hongxchen.github.io/2014/07/19/vlc-compile-on-linux/" target="_blank">http://hongxchen.github.io/2014/07/19/vlc-compile-on-linux/</a><br><a id="more"></a></p>
+<ol>
+<li>LibVLCcore<br>LibVLCcore是VLC的内核，主要代码在src目录中。LibVLCcore主要管理线程，编解码模块，时钟，播放列表和底层控制等。LibVLCcore通过上层的LibVLC模块对外部应用提供服务，也就是说所有底层模块内建于LibVLCcore模块，而外部应用内建于LibVLC模块。</li>
+</ol>
+
       
     </div>
     <footer>
