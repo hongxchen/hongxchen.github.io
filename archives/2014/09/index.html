@@ -3,19 +3,13 @@
 <head>
   <meta charset="utf-8">
   
-  <title>shadowsocks配置 | hongxchen&#39;s blog</title>
+  <title>归档：2014/9 | hongxchen&#39;s blog</title>
   <meta name="author" content="hongxchen">
-  
-  <meta name="description" content="(1) 安装Shadowsocks和Chrome
-brew install shadowsocks-libev
-brew cask install google-chrome
-  (2) 安装Chrome插件Proxy SwitchySharp
-https://chrome.google.com/webstore/detail/proxy-switchysharp/dpplabbmogkhghncfbfdeeokoefdjegm">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="shadowsocks配置"/>
+  
   <meta property="og:site_name" content="hongxchen&#39;s blog"/>
 
   
@@ -209,118 +203,37 @@ https://chrome.google.com/webstore/detail/proxy-switchysharp/dpplabbmogkhghncfbf
 <a href="https://github.com/hongxchen"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/c6625ac1f3ee0a12250227cf83ce904423abf351/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png"></a>
 </header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">2014/9</h2>
+
+
+  
+    <article class="post">
   
   <div class="post-content">
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-07-19T10:41:34.000Z"><a href="/2014/07/19/shadowsocks-config/">7月 19 2014</a></time>
+        <time datetime="2014-08-31T18:29:48.000Z"><a href="/2014/09/01/emacs-gdb-mode/">9月 1 2014</a></time>
       
       
   
-    <h1 class="title">shadowsocks配置</h1>
+    <h1 class="title"><a href="/2014/09/01/emacs-gdb-mode/">emacs gdb mode</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>(1) 安装Shadowsocks和Chrome</p>
-<pre><code>brew <span class="keyword">install</span> shadowsocks-libev
-brew cask <span class="keyword">install</span> google-chrome
-</code></pre><p>  (2) 安装Chrome插件Proxy SwitchySharp</p>
-<pre><code><span class="label">https:</span>//chrome<span class="preprocessor">.google</span><span class="preprocessor">.com</span>/webstore/detail/proxy-switchysharp/dpplabbmogkhghncfbfdeeokoefdjegm
-</code></pre><p><a id="more"></a><br>  (3) 配置</p>
-<pre><code>emacs /usr/<span class="built_in">local</span>/etc/shadowsocks-libev.json
-
-修改下面的配置
- {
-      <span class="string">"server"</span>:<span class="string">""</span>,
-      <span class="string">"server_port"</span>:,
-      <span class="string">"local_port"</span>:,
-      <span class="string">"password"</span>:<span class="string">""</span>,
-      <span class="string">"timeout"</span>:<span class="number">600</span>,
-      <span class="string">"method"</span>:<span class="string">"aes-256-cfb"</span>
- }
-
-服务器请到<span class="keyword">https</span>://www.shadowsocks.net/<span class="built_in">get</span>发邮件获取，配置完成后是如下：
- {
-      <span class="string">"server"</span>:<span class="string">"hongxchen.github.io"</span>,
-      <span class="string">"server_port"</span>:<span class="number">1080</span>,
-      <span class="string">"local_port"</span>:<span class="number">8104</span>,
-      <span class="string">"password"</span>:<span class="string">"abc"</span>,
-      <span class="string">"timeout"</span>:<span class="number">600</span>,
-      <span class="string">"method"</span>:<span class="string">"aes-256-cfb"</span>
- }
- 注意：method字段一定要小写
-</code></pre><p>  (4) 配置Proxy SwitchySharp</p>
-<pre><code><span class="bullet">1. </span>添加新的的配置New Profile
-<span class="bullet">2. </span>Profile Name：Shadowsocks
-<span class="bullet">3. </span>选择Manual Configuration
-<span class="bullet">4. </span>在SOCKS Host中填入127.0.0.1和shadowsocks-libev.json中设置的local_port，如8104。HTTP Proxy，HTTPS Proxy，FTP Proxy空着不填。
-<span class="bullet">5. </span>选择SOCKS v5
-
-<span class="bullet">6. </span>切换到 Switch Rules
-<span class="bullet">7. </span>勾选Enable Switch Rules
-<span class="bullet">8. </span>勾选Online Rule List，在Rule List URL中填入http://autoproxy-gfwlist.googlecode.com/svn/trunk/gfwlist.txt，Proxy Profile选择Shadowsocks
-<span class="bullet">9. </span>勾选AutoProxy Compatible List
-</code></pre><p>  (5) 测试</p>
-<pre><code>终端执行
-/usr/<span class="built_in">local</span>/opt/shadowsocks<span class="attribute">-libev</span>/bin/ss<span class="attribute">-local</span> <span class="attribute">-c</span> /usr/<span class="built_in">local</span>/etc/shadowsocks<span class="attribute">-libev</span><span class="built_in">.</span>json
-
-打开Chrome，Proxy SwitchySharp选择Auto Switch Mode
-打开www<span class="built_in">.</span>youtube<span class="built_in">.</span>com等被墙网站，如果不能打开则https:<span class="comment">//www.shadowsocks.net/get发邮件获取其他服务的的配置</span>
-</code></pre><p>  (6) 开机启动</p>
-<pre><code>Ctrl+C关闭在终端中打开执行的ss-local
-
-制作/usr/local/opt/shadowsocks-libev/homebrew<span class="preprocessor">.mxcl</span><span class="preprocessor">.shadowsocks</span>-libev<span class="preprocessor">.plist</span>文件的软连接到~/Library/LaunchAgents
-% ln -s /usr/local/opt/shadowsocks-libev/homebrew<span class="preprocessor">.mxcl</span><span class="preprocessor">.shadowsocks</span>-libev<span class="preprocessor">.plist</span> ~/Library/LaunchAgents/homebrew<span class="preprocessor">.mxcl</span><span class="preprocessor">.shadowsocks</span>-libev<span class="preprocessor">.plist</span>
-</code></pre><p>  (7) 加载配置文件</p>
-<pre><code>launchctl load ~/Library/LaunchAgents/homebrew<span class="preprocessor">.mxcl</span><span class="preprocessor">.shadowsocks</span>-libev<span class="preprocessor">.plist</span>
-
-** 卸载为launchctl unload ~/Library/LaunchAgents/homebrew<span class="preprocessor">.mxcl</span><span class="preprocessor">.shadowsocks</span>-libev<span class="preprocessor">.plist</span>
-</code></pre><p>  (8) 完成</p>
-<pre><code>到此配置完成，以后开机打开Chrome就能够翻出墙外，https://www<span class="preprocessor">.shadowsocks</span><span class="preprocessor">.net</span>/get提供的服务器在一段时间后可能不能连接，只需关闭服务在shadowsocks-libev<span class="preprocessor">.json</span>文件中写入新的配置项，重新启动服务就行了。
-
-launchctl unload ~/Library/LaunchAgents/homebrew<span class="preprocessor">.mxcl</span><span class="preprocessor">.shadowsocks</span>-libev<span class="preprocessor">.plist</span>
-emacs /usr/local/etc/shadowsocks-libev<span class="preprocessor">.json</span>
-launchctl load ~/Library/LaunchAgents/homebrew<span class="preprocessor">.mxcl</span><span class="preprocessor">.shadowsocks</span>-libev<span class="preprocessor">.plist</span>
-</code></pre><p>  最后附上一个较稳定的服务器获取地址 <a href="https://xwall.io/" target="_blank">https://xwall.io/</a> ，目前注册有限额邀请码和免费VPN提供。</p>
+        <p>1、M + x ， gdb ， gdb -i=mi ./demo<br>2、M-X ， gdb-many-windows</p>
+<p>在ssh终端下不支持xterm鼠标操作，导致Registers之类的视图无法切换。<br>解决方法请参考 <a href="https://markshroyer.com/2012/11/emacs-gdb-keyboard-navigation" target="_blank">https://markshroyer.com/2012/11/emacs-gdb-keyboard-navigation</a></p>
+<p>下载 <a href="https://gist.githubusercontent.com/hongxchen/f9ec022889bdff461ce7/raw/b817de91e7c89b7150784000217aa81acea1497a/switch_views.el" target="_blank">https://gist.githubusercontent.com/hongxchen/f9ec022889bdff461ce7/raw/b817de91e7c89b7150784000217aa81acea1497a/switch_views.el</a><br>放在~/.emacs.d/personal下即可。</p>
 
       
     </div>
     <footer>
       
         
-  
-  <div class="categories">
-    <a href="/categories/Shadowsocks/">Shadowsocks</a>
-  </div>
-
         
-  
-  <div class="tags">
-    <a href="/tags/文章/">文章</a>
-  </div>
-
-        
-  <div class="addthis addthis_toolbox addthis_default_style">
-    
-      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-    
-    
-      <a class="addthis_button_tweet"></a>
-    
-    
-      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
-    
-    
-      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
-    
-    <a class="addthis_counter addthis_pill_style"></a>
-  </div>
-  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
-
       
       <div class="clearfix"></div>
     </footer>
@@ -328,26 +241,14 @@ launchctl load ~/Library/LaunchAgents/homebrew<span class="preprocessor">.mxcl</
 </article>
 
 
-<section id="comment">
-  <h1 class="title">留言</h1>
 
   
-      <div id="fb-root"></div>
-<script>
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-</script>
 
-<div class="fb-comments" data-href="http://hongxchen.github.io/2014/07/19/shadowsocks-config/" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
-      
+  <nav id="pagination">
   
-</section>
-
+  
+  <div class="clearfix"></div>
+</nav>
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
