@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://hongxchen.github.io/2014/07/19/vlc-compile-on-linux/</loc>
+    <lastmod>2014-11-18T15:24:15.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://hongxchen.github.io/2014/09/01/emacs-gdb-mode/</loc>
     <lastmod>2014-08-31T18:38:05.000Z</lastmod>
   </url>
@@ -9,11 +14,6 @@
   <url>
     <loc>http://hongxchen.github.io/2014/07/23/vlc-source-code-01/</loc>
     <lastmod>2014-07-23T14:55:06.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://hongxchen.github.io/2014/07/19/vlc-compile-on-linux/</loc>
-    <lastmod>2014-07-21T14:49:54.000Z</lastmod>
   </url>
   
   <url>
